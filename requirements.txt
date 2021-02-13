@@ -1,2 +1,8 @@
 # Django
 django==3.1.3
+
+# Django heroku
+django-heroku==0.3.1
+
+# Gunicorn
+gunicorn==20.0.4
