@@ -1,9 +1,20 @@
 from django.db import models
-from blogpost.profile_username.models import UserProfileModel
+from django.utils import timezone
+from django.contrib.auth.models import User
 
-class PostModel(UserProfileModel, models.Model):
+class PostModel(models.Model):
     """ Model Post """
-    post_user = models.ForeignKey(UserProfileModel, on_delete=models.CASCADE, related_name="user_posts")
-    title     = models.CharField(max_length=55)
-    content   = models.CharField(max_length=8000)
-    likes     = models.IntegerField(default=0)
+
+    status_post = (('draft','Draft'),('published','Published'))
+    author    = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_post')
+    title     = models.CharField(max_length=250)
+    slugname  = models.SlugField(max_length=50, unique_for_date='date')
+    content   = models.TextField()
+    date      = models.DateTimeField(default=timezone.now)
+    status    = models.CharField(max_length=10, choices=status_post, default='draft')   
+
+    class Meta:
+        ordering = ('-date',)
+
+    def __str__(self):
+        return self.slugname

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title_name %}
+    Blogpost
+{% endblock %}
+{% block content %}
+    <div class="container mx-auto px-5">
+        {% for post in posts %}
+            {% if post.status == 'published' %}
+                <div class="container mx-auto px-5">
+                    <h2> <a href="http://localhost:8000/{{post.slugname}}" > {{ post.title }} </a></h2>
+                    <h5 class="fst-italic"> {{ post.author }} </h5> <br>
+                    <p class="text-justify"> {{ post.content | safe }} </p>
+                    <hr>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}
